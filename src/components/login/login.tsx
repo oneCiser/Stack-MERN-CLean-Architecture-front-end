@@ -25,7 +25,7 @@ function Login(){
               signUp(validate)
               .then(res => {
                   console.log(res)
-                    if(res.status == 200){
+                    if(res.status == 201){
                         openNotificationWithIcon('success', 'Success', 'User created successfully');
                     }
               })
