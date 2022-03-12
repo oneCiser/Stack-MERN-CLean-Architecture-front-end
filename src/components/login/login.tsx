@@ -1,9 +1,15 @@
 import React from 'react';
-import { Form, Input, Button, Row, Col, Space, Card  } from 'antd';
+import { Form, Input, Button, notification, Card  } from 'antd';
 import { signUp,login} from '../../services/auth';
-
+const openNotificationWithIcon = (type: string, message: string, err: string) => {
+    if(type == 'success' || type == 'warning' || type == 'info' || type == 'error'){
+        notification[type]({ message: message, description: err});
+    }
+}
+    
 
 function Login(){
+
     const [form] = Form.useForm();
     const onFinish = (values: any) => {
         console.log('Success:', form.getFieldValue('username'), form.isFieldsValidating([ 'username' ]));
@@ -16,7 +22,16 @@ function Login(){
       const signUpClick = async () => {
           const validate = await form.validateFields([ 'username' , 'password' ]);
           if(validate){
-              signUp(validate);
+              signUp(validate)
+              .then(res => {
+                  console.log(res)
+                    if(res.status == 200){
+                        openNotificationWithIcon('success', 'Success', 'User created successfully');
+                    }
+              })
+              .catch(err => {
+                    openNotificationWithIcon('error', 'Error', 'User creation failed');
+              })
           }
       }
     return (

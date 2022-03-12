@@ -1,5 +1,5 @@
 # pull official base image
-FROM node:12.12.0-alpine as build
+FROM node:latest  as build
 
 # set working directory
 WORKDIR /frontend
@@ -11,10 +11,12 @@ COPY package.json ./
 COPY package-lock.json ./
 RUN npm install --silent
 RUN npm install react-scripts@5.0.0 -g --silent
+RUN npm i typescript @typescript-eslint/parser --silent
+RUN npm i @typescript-eslint/eslint-plugin
 
 # add app
 COPY . ./
-# RUN npm run build
+RUN npm run build --prod
 
 # start app
 FROM nginx:stable-alpine

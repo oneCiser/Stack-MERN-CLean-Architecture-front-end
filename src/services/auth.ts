@@ -9,7 +9,7 @@ import IUserDB from "../schemas/userDB";
 const APP_V = "v1"
 
 const client = axios.create({
-    baseURL: `${BASE_URL}/api/${APP_V}/auth`,
+    baseURL: `${process.env.BACKEND_URL}/api/${APP_V}/auth`,
 });
 
 const signUp = (user: IUserBase) => {
